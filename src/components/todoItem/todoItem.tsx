@@ -1,7 +1,6 @@
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { ListModelType } from "../../mst";
-import "./todoItem.scss";
 import {
   MainContainer,
   ItemContainer,
@@ -16,19 +15,21 @@ type PropTypes = {
   rootTree?: ListModelType;
 };
 
+type InputEvent = React.ChangeEvent<HTMLInputElement>;
+type ButtonEvent = React.FormEvent<HTMLFormElement>;
+
 const TodoItem = inject("rootTree")(
   observer((props: PropTypes) => {
-    
     const { rootTree } = props;
     const [newLabel, setNewLabel] = React.useState("");
     if (!rootTree) return null;
-    const inputLabelHandler = (e: any) => {
+    const inputLabelHandler = (e: InputEvent) => {
       const newInputLabel = e.target.value;
       setNewLabel(newInputLabel);
     };
 
-    const onSubmit = (e: any) => {
-      e.preventDefault();
+    const onSubmit = (event: ButtonEvent) => {
+      event.preventDefault();
       if (!rootTree) return null;
       rootTree.newTask(newLabel);
       setNewLabel("");

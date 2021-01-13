@@ -12,13 +12,13 @@ const ListModel = types
     todos: types.array(RootModel),
   })
   .actions((self) => {
-    function newTask(labelNote: string) {
+    const newTask = (labelNote: string) => {
       const id = uuidv4();
       applySnapshot(self, {
         ...self,
         todos: [...self.todos, { id, labelNote, done: false }],
       });
-    }
+    };
     return { newTask };
   })
   .actions((self) => ({
